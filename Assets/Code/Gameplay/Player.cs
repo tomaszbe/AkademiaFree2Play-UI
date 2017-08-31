@@ -4,6 +4,7 @@ public class Player : MonoBehaviour {
 	public float jumpForce = 5f;
 	public float moveSpeed = 2f;
 	public float size = 32;
+	public float maxSizeY = 64;
 
 	Sprite currentSkin;
 	Rigidbody2D body;
@@ -16,7 +17,7 @@ public class Player : MonoBehaviour {
 
 		Vector3 scale = Vector3.one;
 		scale.x = size / skinSize.x;
-		scale.y = size / skinSize.y;
+		scale.y = size / skinSize.x;
 
 		skinObject.transform.localScale = scale;
 		skinObject.GetComponent<SpriteRenderer>().sprite = skin;
@@ -93,6 +94,7 @@ public class Player : MonoBehaviour {
 			Victory();
 		} else if (collider.gameObject.tag.Equals("Key")) {
 			hasKey = true;
+			GameObject.FindGameObjectWithTag("Finish").GetComponent<SwitchSkin>().Switch();
 			GameObject.Destroy(collider.gameObject);
 		}
 	}
