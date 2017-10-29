@@ -1,0 +1,8 @@
+﻿1. Okno pauzy uruchamia się kilka sekund, ponieważ razem z jego otwarciem wywołujemy w jednej pętli (500+ iteracji) wielokrotnie zasobożerne funkcje, przez co zawieszamy program.
+Problem spadających fpsów wynika z ilości tzw. "draw calls". Za każdym razem, kiedy rysujemy sprite'a ładujemy do GPU nową teksturę, przez co musimy wywołać kolejnego draw calla, co jest kosztowną operacją.
+
+2. Problem zawieszania przy uruchomieniu pauzy można rozwiązać np. poprzez "rozbicie" pętli na mniejsze pętle w ciągu kilku klatek (i wyświetleniu np. animacji ładowania w tym czasie).
+Draw calle drastycznie zredukujemy łącząc sprite'y w "sprite atlas". Dzięki temu jedna duża tekstura do GPU ładowana jest tylko raz i wiele spritów jest rysowanych na raz w jedym draw callu.
+Innym rozwiązaniem może być dynamiczne ładowanie tylko tych spritów, które widoczne są w danym momencie w okienku (+ ewentualnie margines).
+
+3. Powodem crashowania się gry na słabszych urządzeniach może być ograniczona ilość dostępnej pamięci RAM. 500 obrazków może ważyć na tyle dużo, że w połączeniu z ilością pamięci zajmowaną przez inne assety, rzeczy z unity, inne aplikacje, system operacyjny itp., pamięci nie wystarczy na załadowanie wszystkich obrazków więc gra się zcrashuje.
